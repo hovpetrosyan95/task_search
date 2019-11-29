@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import Test from "./screens/Test";
+import Search from "./screens/Search";
 
-ReactDOM.render(<Test />, document.getElementById("container"));
+ReactDOM.render(<Search />, document.getElementById("container"));
