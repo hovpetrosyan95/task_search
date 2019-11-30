@@ -1,25 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 import Input from "../../components/Input";
 import Top10 from "../../components/Top10";
 import SavedTournaments from "../../components/SavedTournaments";
 import Prompt from "../../components/Prompt";
 import requestMaker from "../../utils/requestMaker";
+import { saveTournaments } from "../../actions/tournament/saveTournaments";
+import PropTypes from "prop-types";
 import "./index.scss";
 
-export default function Search() {
+function Search(props) {
   const [searchItems, setSearchItems] = useState([]);
   const [isInputValid, setInputValidation] = useState(true);
-  const [open, setOpen] = React.useState(false);
-  const [tournamentForDelete, setTournamentDelete] = useState(null);
 
-  const onTournamentDelete = (title) => {
-    setOpen(true);
-    setTournamentDelete(title);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  useEffect(() => {
+    const keys = Object.keys(localStorage).filter(
+      (item) => item.split("_")[0] === "id"
+    );
+    const savedTournaments = keys.map((key) => JSON.parse(localStorage[key]));
+    props.saveTournaments(savedTournaments);
+  }, []);
 
   const onInputChange = async ({ target }) => {
     const { value } = target;
@@ -39,28 +39,30 @@ export default function Search() {
     setSearchItems(searchResult[0].documents);
   };
 
-  const onTournamentSelect = (tournament) => {
-    localStorage.setItem(`id_${tournament.id}`, JSON.stringify(tournament));
-    setSearchItems([]);
-  };
-
   return (
     <div className="main-container">
-      <Prompt
-        open={open}
-        handleClose={handleClose}
-        tournamentTitle={tournamentForDelete}
-      />
+      <Prompt />
       <div className="form-container">
         <Input onInputChange={onInputChange} isInputValid={isInputValid} />
-        <Top10
-          searchItems={searchItems}
-          onTournamentSelect={onTournamentSelect}
-        ></Top10>
+        <Top10 searchItems={searchItems}></Top10>
       </div>
       <div className="saved-tournaments-container">
-        <SavedTournaments onTournamentDelete={onTournamentDelete} />
+        <SavedTournaments />
       </div>
     </div>
   );
 }
+
+Search.propTypes = {
+  saveTournaments: PropTypes.func.isRequired
+};
+
+const mapStateToProps = (state) => ({
+  ...state
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  saveTournaments: (tournaments) => dispatch(saveTournaments(tournaments))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

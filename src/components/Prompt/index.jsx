@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -6,9 +7,25 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import PropTypes from "prop-types";
+import { closePrompt } from "../../actions/prompt/closePrompt";
+import { deleteTournament } from "../../actions/tournament/deleteTournament";
 
-export default function Prompt(props) {
-  const { open, handleClose, tournamentTitle } = props;
+function Prompt(props) {
+  const { closePrompt } = props;
+  const { open, idForDeleting } = props.prompt;
+  const getTitle = (id) => {
+    const tournament = JSON.parse(localStorage.getItem(`id_${id}`));
+    return tournament ? tournament.title : null;
+  };
+
+  const handleClose = () => closePrompt();
+
+  const onTournamentDelete = (id) => {
+    localStorage.removeItem(`id_${id}`);
+    closePrompt();
+    return props.deleteTournament(id);
+  };
+
   return (
     <div>
       <Dialog
@@ -27,14 +44,17 @@ export default function Prompt(props) {
             Do you want really to delete this tournament:
           </DialogContentText>
           <DialogContentText style={{ color: "blue" }}>
-            {tournamentTitle}
+            {getTitle(idForDeleting)}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose} color="default">
             Cancel
           </Button>
-          <Button onClick={handleClose} color="secondary">
+          <Button
+            onClick={() => onTournamentDelete(idForDeleting)}
+            color="secondary"
+          >
             Delete
           </Button>
         </DialogActions>
@@ -44,7 +64,19 @@ export default function Prompt(props) {
 }
 
 Prompt.propTypes = {
-  open: PropTypes.bool.isRequired,
-  handleClose: PropTypes.func.isRequired,
-  tournamentTitle: PropTypes.string || PropTypes.object
+  prompt: PropTypes.object,
+  handleClose: PropTypes.func,
+  closePrompt: PropTypes.func.isRequired,
+  deleteTournament: PropTypes.func.isRequired
 };
+
+const mapStateToProps = (state) => ({
+  ...state
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  closePrompt: () => dispatch(closePrompt()),
+  deleteTournament: (id) => dispatch(deleteTournament(id))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Prompt);

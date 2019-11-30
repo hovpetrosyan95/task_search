@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -9,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { red } from "@material-ui/core/colors";
+import { openPrompt } from "../../actions/prompt/openPrompt";
 
 const useStyles = makeStyles({
   card: {
@@ -43,12 +45,12 @@ const useStyles = makeStyles({
 
 const imgURL = "https://cdn.mos.cms.futurecdn.net/kRXPaebtQjZ42dBiV4aQxd-970-80.jpg";
 
-export default function Tournament(props) {
+function Tournament(props) {
   const {
     data: { title, description, id },
     onTournamentSelect,
     clickable,
-    onTournamentDelete
+    openPrompt
   } = props;
   const classes = useStyles();
 
@@ -75,8 +77,8 @@ export default function Tournament(props) {
             <HighlightOffIcon
               color="error"
               className={classes.iconHover}
-              style={{ fontSize: 30 }}
-              onClick={() => onTournamentDelete(title)}
+              style={{ fontSize: "25", paddingRight: "5" }}
+              onClick={() => openPrompt(id)}
             />
           ) : null}
         </CardActions>
@@ -89,5 +91,16 @@ Tournament.propTypes = {
   data: PropTypes.object.isRequired,
   onTournamentSelect: PropTypes.func,
   clickable: PropTypes.bool.isRequired,
-  onTournamentDelete: PropTypes.func
+  onTournamentDelete: PropTypes.func,
+  openPrompt: PropTypes.func
 };
+
+const mapStateToProps = (state) => ({
+  ...state
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  openPrompt: (id) => dispatch(openPrompt(id))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Tournament);
