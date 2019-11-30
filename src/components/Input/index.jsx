@@ -25,12 +25,7 @@ export default function Input(props) {
       onChange={onInputChange}
     />
   );
-  return (
-    <React.Fragment>
-      {component}
-      <div className></div>
-    </React.Fragment>
-  );
+  return <React.Fragment>{component}</React.Fragment>;
 }
 
 Input.propTypes = {
