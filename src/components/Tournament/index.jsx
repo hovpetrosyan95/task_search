@@ -71,12 +71,14 @@ export default function Tournament(props) {
           </CardContent>
         </CardActionArea>
         <CardActions className={classes.button}>
-          <HighlightOffIcon
-            color="error"
-            className={classes.iconHover}
-            style={{ fontSize: 30 }}
-            onClick={() => onTournamentDelete(title)}
-          />
+          {!clickable ? (
+            <HighlightOffIcon
+              color="error"
+              className={classes.iconHover}
+              style={{ fontSize: 30 }}
+              onClick={() => onTournamentDelete(title)}
+            />
+          ) : null}
         </CardActions>
       </Card>
     </div>
