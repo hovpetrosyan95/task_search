@@ -91,7 +91,6 @@ Tournament.propTypes = {
   data: PropTypes.object.isRequired,
   onTournamentSelect: PropTypes.func,
   clickable: PropTypes.bool.isRequired,
-  onTournamentDelete: PropTypes.func,
   openPrompt: PropTypes.func
 };
 

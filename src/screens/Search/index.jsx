@@ -36,7 +36,7 @@ function Search(props) {
 
     const route = `/search?q=${value}&index=tournament`;
     const searchResult = await requestMaker({ route });
-    setSearchItems(searchResult[0].documents);
+    setSearchItems(searchResult[0].documents || []);
   };
 
   return (
