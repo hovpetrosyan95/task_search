@@ -9,7 +9,12 @@ function SavedTournaments(props) {
     return <Tournament data={tournament} key={tournament.id} clickable={false} />;
   });
 
-  return <div>{savedTournaments}</div>;
+  return (
+    <div>
+      <h1>SAVED TOURNAMENTS</h1>
+      {savedTournaments}
+    </div>
+  );
 }
 
 SavedTournaments.propTypes = {
