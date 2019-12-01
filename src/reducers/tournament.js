@@ -2,11 +2,16 @@ export default (state = { tournaments: [] }, action) => {
   const { tournaments } = state;
   const { type, payload } = action;
   switch (type) {
-    case "save":
+    case "save": {
+      const objectWithUniqueKeys = new Set(
+        [...tournaments, payload].map(JSON.stringify)
+      );
+
       return {
         ...state,
-        tournaments: [...tournaments, payload]
+        tournaments: [...objectWithUniqueKeys].map(JSON.parse)
       };
+    }
     case "delete":
       return {
         ...state,
