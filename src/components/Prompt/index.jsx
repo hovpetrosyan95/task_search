@@ -12,7 +12,7 @@ import { deleteTournament } from "../../actions/tournament/deleteTournament";
 
 function Prompt(props) {
   const { closePrompt } = props;
-  const { open, idForDeleting } = props.prompt;
+  const { open, idForDeleting } = props;
   const getTitle = (id) => {
     const tournament = JSON.parse(localStorage.getItem(`id_${id}`));
     return tournament ? tournament.title : null;
@@ -21,7 +21,6 @@ function Prompt(props) {
   const handleClose = () => closePrompt();
 
   const onTournamentDelete = (id) => {
-    localStorage.removeItem(`id_${id}`);
     closePrompt();
     return props.deleteTournament(id);
   };
@@ -64,14 +63,15 @@ function Prompt(props) {
 }
 
 Prompt.propTypes = {
-  prompt: PropTypes.object,
-  handleClose: PropTypes.func,
+  open: PropTypes.bool.isRequired,
+  idForDeleting: PropTypes.string.isRequired,
   closePrompt: PropTypes.func.isRequired,
   deleteTournament: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  ...state
+  idForDeleting: state.prompt.idForDeleting,
+  open: state.prompt.open
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -1,0 +1,12 @@
+@import "../../styles";
+
+.search-container {
+  margin-left: 5%;
+  width: 50%;
+  height: 80%;
+  text-align: center;
+  border: 1px solid blue;
+  border-radius: $borderRadius;
+  overflow: scroll;
+  float: left;
+}

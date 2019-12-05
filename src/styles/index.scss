@@ -1,1 +1,31 @@
 $primaryColor: blue;
+$borderRadius: 1%;
+
+.main-container {
+  width: 100%;
+  height: 95%;
+  border: 2px solid $primaryColor;
+  border-radius: $borderRadius;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 3%;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 2px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #ced6d1;
+  border-radius: 2px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #afbdb4;
+}

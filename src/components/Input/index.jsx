@@ -5,27 +5,27 @@ import "./index.scss";
 
 export default function Input(props) {
   const { onInputChange, isInputValid } = props;
-  const component = isInputValid ? (
+  const attributes = isInputValid
+    ? {
+        id: "outlined-basic",
+        label: "Search Field"
+      }
+    : {
+        error: true,
+        id: "outlined-error-helper-text",
+        label: "Validation Error",
+        helperText: "Minimal 2 chars is required",
+        margin: "normal"
+      };
+
+  return (
     <TextField
-      id="outlined-basic"
+      {...attributes}
       className="search-input"
-      label="Search Field"
       variant="outlined"
-      onChange={onInputChange}
-    />
-  ) : (
-    <TextField
-      error
-      id="outlined-error-helper-text"
-      className="search-input"
-      label="Validation Error"
-      helperText="Minimal 2 chars is required"
-      margin="normal"
-      variant="outlined"
-      onChange={onInputChange}
+      onKeyUp={onInputChange}
     />
   );
-  return component;
 }
 
 Input.propTypes = {

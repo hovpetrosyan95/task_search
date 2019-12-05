@@ -1,0 +1,11 @@
+@import "../../styles";
+
+.saved-tournaments-container {
+  width: 40%;
+  height: 80%;
+  float: left;
+  border: 1px solid blue;
+  border-radius: $borderRadius;
+  overflow: scroll;
+  text-align: center;
+}

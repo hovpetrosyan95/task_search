@@ -1,3 +1,3 @@
 export const closePrompt = () => ({
-  type: "close"
+  type: "CLOSE"
 });

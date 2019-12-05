@@ -2,12 +2,12 @@ export default (state = { open: false, idForDeleting: "" }, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case "open":
+    case "OPEN":
       return {
         open: true,
         idForDeleting: payload
       };
-    case "close":
+    case "CLOSE":
       return {
         open: false,
         idForDeleting: ""

@@ -1,4 +1,4 @@
 export const openPrompt = (id) => ({
-  type: "open",
+  type: "OPEN",
   payload: id
 });

@@ -11,11 +11,12 @@ import CardActions from "@material-ui/core/CardActions";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { red } from "@material-ui/core/colors";
 import { openPrompt } from "../../actions/prompt/openPrompt";
+import { saveTournament } from "../../actions/tournament/saveTournament";
 
 const useStyles = makeStyles({
   card: {
     width: "80%",
-    display: "flex",
+    display: "inline-block",
     backgroundColor: "#e4eff2",
     "margin-top": "5%",
     position: "relative"
@@ -48,16 +49,16 @@ const imgURL = "https://cdn.mos.cms.futurecdn.net/kRXPaebtQjZ42dBiV4aQxd-970-80.
 function Tournament(props) {
   const {
     data: { title, description, id },
-    onTournamentSelect,
     clickable,
-    openPrompt
+    openPrompt,
+    saveTournament
   } = props;
   const classes = useStyles();
 
   return (
     <div
       onClick={() =>
-        clickable ? onTournamentSelect({ title, description, imgURL, id }) : null
+        clickable ? saveTournament({ title, description, imgURL, id }) : null
       }
     >
       <Card className={classes.card}>
@@ -89,17 +90,14 @@ function Tournament(props) {
 
 Tournament.propTypes = {
   data: PropTypes.object.isRequired,
-  onTournamentSelect: PropTypes.func,
+  saveTournament: PropTypes.func.isRequired,
   clickable: PropTypes.bool.isRequired,
   openPrompt: PropTypes.func
 };
 
-const mapStateToProps = (state) => ({
-  ...state
-});
-
 const mapDispatchToProps = (dispatch) => ({
-  openPrompt: (id) => dispatch(openPrompt(id))
+  openPrompt: (id) => dispatch(openPrompt(id)),
+  saveTournament: (tournament) => dispatch(saveTournament(tournament))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Tournament);
+export default connect(null, mapDispatchToProps)(Tournament);
