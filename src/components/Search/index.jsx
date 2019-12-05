@@ -39,7 +39,7 @@ function Search(props) {
 
 Search.propTypes = {
   getTournaments: PropTypes.func.isRequired,
-  searchItems: PropTypes.array.isRequired,
+  searchItems: PropTypes.array,
   clearSearchResults: PropTypes.func.isRequired
 };
 
